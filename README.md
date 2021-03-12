@@ -5,7 +5,7 @@ Skeleton Merger, an Unsupervised Aligned Keypoint Detector.
 
 ## A map of the repository
 + The `merger/pointnetpp` folder contains the [Pytorch Implementation of PointNet and PointNet++](https://github.com/yanx27/Pointnet_Pointnet2_pytorch) repository with some minor changes. It is adapted to make compatible relative imports.
-+ The `merger/composed_chamfer.py` file contains an efficient implementation of proposed Composed Chamfer Distance (CCD).
++ The `merger/composed_chamfer.py` file contains an efficient implementation of proposed Composite Chamfer Distance (CCD).
 + The `merger/data_flower.py` file is for data loading and preprocessing.
 + The `merger/merger_net.py` file contains the `Skeleton Merger` implementation.
 + The root folder contains several scripts for training and testing.
