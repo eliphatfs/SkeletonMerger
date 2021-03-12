@@ -1,5 +1,7 @@
-# Skeleton Merger: an Unsupervised Aligned Keypoint Detector
-![Intro picture](_readme_resources/intropic.jpg)
+# Skeleton Merger
+Skeleton Merger, an Unsupervised Aligned Keypoint Detector.
+
+[<img src="_readme_resources/intropic.jpg" width="50%" alt="Intro pic" />](_readme_resources/intropic.jpg)
 
 ## A map of the repository
 + The `merger/pointnetpp` folder contains the [Pytorch Implementation of PointNet and PointNet++](https://github.com/yanx27/Pointnet_Pointnet2_pytorch) repository with some minor changes. It is adapted to make compatible relative imports.
