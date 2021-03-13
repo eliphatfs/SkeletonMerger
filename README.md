@@ -12,3 +12,6 @@ Skeleton Merger, an Unsupervised Aligned Keypoint Detector.
 
 ## Usage of script files
 Usage of the script files, together with a brief description of data format, are available through the `-h` command line option.
+
+## Dataset
+The ShapeNetCore.v2 dataset used in the paper is available from the [Point Cloud Datasets](https://github.com/AnTao97/PointCloudDatasets) repository.
