@@ -1,5 +1,6 @@
 # Skeleton Merger
 Skeleton Merger, an Unsupervised Aligned Keypoint Detector.
+The paper is available at [https://arxiv.org/abs/2103.10814](https://arxiv.org/abs/2103.10814).
 
 [<img src="_readme_resources/intropic.jpg" width="50%" alt="Intro pic" />](_readme_resources/intropic.jpg)
 
