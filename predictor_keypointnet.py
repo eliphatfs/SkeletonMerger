@@ -67,6 +67,9 @@ for i in tqdm.tqdm(range(0, len(kpn_ds), ns.batch), unit_scale=ns.batch):
         pcn = 2.0 * (pcn - 0.5)
         Q.append(pcn)
         out_nfact.append([pcmax, pcmin])
+    if len(Q) == 1:
+        Q.append(Q[-1])
+        out_nfact.append(out_nfact[-1])
     with torch.no_grad():
         recon, key_points, kpa, emb, null_activation = net(torch.Tensor(np.array(Q)).to(ns.device))
     for kp in key_points:
