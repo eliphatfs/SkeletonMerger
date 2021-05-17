@@ -19,8 +19,8 @@ arg_parser.add_argument('-t', '--train-data-dir', type=str, default='../point_cl
                         help='Directory that contains training .h5 files.')
 arg_parser.add_argument('-v', '--val-data-dir', type=str, default='../point_cloud/val',
                         help='Directory that contains validation .h5 files.')
-arg_parser.add_argument('-c', '--subclass', type=int, default=0,
-                        help='Subclass label ID to train on.')
+arg_parser.add_argument('-c', '--subclass', type=int, default=14,
+                        help='Subclass label ID to train on.')  # 14 is `chair` class.
 arg_parser.add_argument('-m', '--checkpoint-path', '--model-path', type=str, default='merger.pt',
                         help='Model checkpoint file path for saving.')
 arg_parser.add_argument('-k', '--n-keypoint', type=int, default=10,
