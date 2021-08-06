@@ -4,6 +4,8 @@ The paper is available at [https://arxiv.org/abs/2103.10814](https://arxiv.org/a
 
 [<img src="_readme_resources/intropic.jpg" width="50%" alt="Intro pic" />](_readme_resources/intropic.jpg)
 
+**Update Aug. 6th:** The point cloud visualizer is now released! See [https://github.com/eliphatfs/PointCloudVisualizer](https://github.com/eliphatfs/PointCloudVisualizer).
+
 ## A map of the repository
 + The `merger/pointnetpp` folder contains the [Pytorch Implementation of PointNet and PointNet++](https://github.com/yanx27/Pointnet_Pointnet2_pytorch) repository with some minor changes. It is adapted to make compatible relative imports.
 + The `merger/composed_chamfer.py` file contains an efficient implementation of proposed Composite Chamfer Distance (CCD).
