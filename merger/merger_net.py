@@ -39,7 +39,7 @@ class PBlock(nn.Module):  # MLP Block
         return x
 
 
-class Head(nn.Module):  # Decoder unit, one per line
+class Head(nn.Module):  # Decoder unit, one per line segment
     def __init__(self):
         super().__init__()
         self.emb = nn.Parameter(torch.randn((200, 3)) * 0.002)
@@ -52,8 +52,8 @@ class Head(nn.Module):  # Decoder unit, one per line
         self.b_interp = 1.0 - self.f_interp
         # KPA: N x 3, KPB: N x 3
         # Interpolated: N x count x 3
-        K = KPA.unsqueeze(-2) * self.f_interp + KPB.unsqueeze(-2) * self.b_interp
-        R = self.emb[:count, :].unsqueeze(0) + K  # N x count x 3
+        x = KPA.unsqueeze(-2) * self.f_interp + KPB.unsqueeze(-2) * self.b_interp
+        R = self.emb[:count, :].unsqueeze(0) + x  # N x count x 3
         return R.reshape((-1, count, 3)), self.emb
 
 
@@ -75,20 +75,20 @@ class Net(nn.Module):  # Skeleton Merger structure
             self.DEC.append(DECN)
 
     def forward(self, input_x):
-        APP_PT = torch.cat([input_x, input_x, input_x], -1)
-        KP, GF = self.PTW(APP_PT.permute(0, 2, 1))
-        KPL = self.PT_L(KP)
-        KPA = F.softmax(KPL.permute(0, 2, 1), -1)  # [n, k, npt]
-        KPCD = KPA.bmm(input_x)  # [n, k, 3]
-        RP = []
-        L = []
+        point_cloud = torch.cat([input_x, input_x, input_x], -1)
+        kp_x, l3_feats = self.PTW(point_cloud.permute(0, 2, 1))
+        kp_x = self.PT_L(kp_x)
+        kp_heatmaps = F.softmax(kp_x.permute(0, 2, 1), -1)  # [n, k, npt]
+        kpcd = kp_heatmaps.bmm(input_x)  # KeyPoint ClouD [n, k, 3]
+        rp = []  # Reconstructed Parts
+        ofs = []  # Offset embeddings for regularization loss
         for i in range(self.k):
             for j in range(i):
-                R, EM = self.DEC[i][j](KPCD[:, i, :], KPCD[:, j, :])
-                RP.append(R)
-                L.append(EM)
-        GFP = F.max_pool1d(GF, 16).squeeze()
-        MA = F.sigmoid(self.MA_L(self.MA(GFP)))
+                R, EM = self.DEC[i][j](kpcd[:, i, :], kpcd[:, j, :])
+                rp.append(R)
+                ofs.append(EM)
+        global_feats = F.max_pool1d(l3_feats, 16).squeeze()
+        strengths = F.sigmoid(self.MA_L(self.MA(global_feats)))
         # MA = torch.sigmoid(self.MA_EMB).expand(input_x.shape[0], -1)
-        LF = torch.cat(L, dim=1)  # P x 72 x 3
-        return RP, KPCD, KPA, LF, MA
+        ofs = torch.cat(ofs, dim=1)  # P x 72 x 3
+        return rp, kpcd, kp_heatmaps, ofs, strengths
